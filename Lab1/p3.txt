@@ -1,0 +1,8 @@
+Compute the sum of n numbers.
+
+n $ read("Read n: ")
+i $ 0
+sum $ 0
+while(i<n):
+   sum $ sum + read("Enter the numbers: ")
+print(sum)

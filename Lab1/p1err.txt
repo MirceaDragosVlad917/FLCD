@@ -1,0 +1,15 @@
+Verify if a number is prime. Should contain 2 types of lexical errors.
+
+num $ read("Enter the number: ")
+ok $ 0@a4    -> appearance of illegal characters
+if num > 1:
+   for i in rnge(2, num//2):    -> spelling error
+      if (num % i) == 0:
+         ok $ 1
+         break
+   if (ok == 0)
+      print(num, "is a prime number")
+   else:
+      print(num, "is not a prime number")
+else:
+print(num, "is not a prime number")
