@@ -1,0 +1,8 @@
+States = {q0,q1,q2,q3}
+Alphabet = {a,b,c}
+InitialState = q0
+FinalStates = {q1,q2,q3}
+sigma:
+    (q0,a) -> {q1}
+    (q1,b) -> {q2}
+    (q2,c) -> {q3}
