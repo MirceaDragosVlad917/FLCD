@@ -122,8 +122,10 @@ class Scanner:
         if idReg:
             token = idReg[0]
             print("Found identifier " + token)
-            if self.symTable.addToIdTable(token):
-                self.pif.append(["id", self.symTable.getIdTable().find(token)])
+            self.symTable.addToIdTable(token)
+            self.pif.append(["id", self.symTable.getIdTable().find(token)])
+            # if self.symTable.addToIdTable(token):
+            #     self.pif.append(["id", self.symTable.getIdTable().find(token)])
             self.index = self.index + len(token)
             return True
         return False
