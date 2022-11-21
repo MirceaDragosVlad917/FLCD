@@ -54,8 +54,8 @@ class Scanner:
         strReg = re.findall("^\"([a-zA-z0-9_ ]*)\"", self.program[self.index:])
         if strReg:
             token = strReg[0]
-            self.pif.append(["strConst", -2])
             self.symTable.addToStrConstTable("\"" + token + "\"")
+            self.pif.append(["strConst", self.symTable.getStrConstTable().find("\"" + token + "\"")])
             self.index = self.index + len(token) + 2
             print("Found string constant: " + token)
             return True
@@ -90,8 +90,10 @@ class Scanner:
                 if not self.tokens.__contains__(ex) and not ex.isdigit():
                     return False
                 print("Found int constant: " + token)
-            self.pif.append(["intConst", -1])
             self.symTable.addToIntConstTable(token)
+            self.pif.append(["intConst", self.symTable.getIntConstTable().find(token)])
+            if self.program[self.index + len(token)].isalpha():
+                return False
             self.index = self.index + len(token)
             return True
         return False
@@ -126,6 +128,8 @@ class Scanner:
             self.pif.append(["id", self.symTable.getIdTable().find(token)])
             # if self.symTable.addToIdTable(token):
             #     self.pif.append(["id", self.symTable.getIdTable().find(token)])
+            if self.program[self.index + len(token)].isalpha():
+                return False
             self.index = self.index + len(token)
             return True
         return False
