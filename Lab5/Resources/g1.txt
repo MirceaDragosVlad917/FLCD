@@ -1,0 +1,5 @@
+Non-terminals = {S,A}
+Terminals = {a,b,c}
+Starting-symbol = S
+Productions:
+S -> a S b S | c
