@@ -1,4 +1,4 @@
-Non-terminals = {program,nr,(stmtlist),condition,stmt,simplstmt,decllist,cmpdstmt,declaration,identifier,type,type1,arraydecl,stmtlist,structstmt,assignstmt,expression,term,factor,const,instmt,outstmt,ifstmt,whilestmt,RELATION}
+Non-terminals = {program,nr,condition,stmt,simplstmt,decllist,cmpdstmt,declaration,identifier,type,type1,arraydecl,stmtlist,structstmt,assignstmt,expression,term,factor,const,instmt,outstmt,ifstmt,whilestmt,RELATION}
 Terminals = {";",":","if","bool","while","char","int","float","array","[","]","of","$","+","-","<","<=","=","!=",">=",">","*","//","(",")","else","read","print"}
 Starting-symbol = program
 Productions:
@@ -8,7 +8,7 @@ declaration -> identifier ":" type
 type1 -> "bool" | "char" | "int" | "float"
 arraydecl -> "array" "[" nr "]" "of" type1
 type -> type1 | arraydecl
-cmpdstmt -> (stmtlist)
+cmpdstmt -> "(" stmtlist ")"
 stmtlist -> stmt | stmt ";" stmtlist
 stmt -> simplstmt | structstmt
 simplstmt -> assignstmt | instmt

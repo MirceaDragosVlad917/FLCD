@@ -12,7 +12,7 @@ def menu():
 
 def run():
     try:
-        grammar = Grammar("Resources/g2.txt")
+        grammar = Grammar("Resources/g1.txt")
         grammar.readGrammar()
         while 1:
             menu()
@@ -30,7 +30,8 @@ def run():
                 case 3:
                     grammar.printProductions()
                 case 4:
-                    grammar.productionsForNonTerminal()
+                    non_terminal = input("Please enter the non-terminal: ")
+                    grammar.productionsForNonTerminal(non_terminal)
                 case 5:
                     print(grammar.checkCFG())
                 case _:

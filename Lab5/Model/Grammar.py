@@ -72,13 +72,12 @@ class Grammar:
             self.productions.append(production)
             index = index + 1
 
-    def productionsForNonTerminal(self):
+    def productionsForNonTerminal(self, non_terminal):
         """
         This function prints the productions for a given non-terminal that is read from keyboard
         In case the string read from keyboard is not in the list of non-terminals, a message is displayed on the screen
         :return:
         """
-        non_terminal = input("Please enter the non-terminal: ")
         if non_terminal not in self.nonTerminals:
             print("The non-terminal is not in the list of non terminals!")
             return
