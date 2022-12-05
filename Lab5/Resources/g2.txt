@@ -1,0 +1,25 @@
+Non-terminals = {program,nr,(stmtlist),condition,stmt,simplstmt,decllist,cmpdstmt,declaration,identifier,type,type1,arraydecl,stmtlist,structstmt,assignstmt,expression,term,factor,const,instmt,outstmt,ifstmt,whilestmt,RELATION}
+Terminals = {";",":","if","bool","while","char","int","float","array","[","]","of","$","+","-","<","<=","=","!=",">=",">","*","//","(",")","else","read","print"}
+Starting-symbol = program
+Productions:
+program -> decllist ";" cmpdstmt
+decllist -> declaration | declaration ";" decllist
+declaration -> identifier ":" type
+type1 -> "bool" | "char" | "int" | "float"
+arraydecl -> "array" "[" nr "]" "of" type1
+type -> type1 | arraydecl
+cmpdstmt -> (stmtlist)
+stmtlist -> stmt | stmt ";" stmtlist
+stmt -> simplstmt | structstmt
+simplstmt -> assignstmt | instmt
+assignstmt -> identifier "$" expression
+expression -> expression "+" term | expression "-" term | term
+term -> term "*" factor | term "//" factor | factor
+factor -> "(" expression ")" | identifier | const
+instmt -> "read" "(" identifier ")"
+outstmt -> "print" "(" identifier ")"
+structstmt -> cmpdstmt | ifstmt | whilestmt
+ifstmt -> "if" "(" condition ")" ":" stmt "else" stmt
+whilestmt -> "while" "(" condition ")" ":" stmt
+condition -> expression RELATION expression
+RELATION -> "<" | "<=" | "=" | "!=" | ">=" | ">"

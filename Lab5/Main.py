@@ -11,30 +11,32 @@ def menu():
     print("5. Check CFG \n")
 
 def run():
-    grammar = Grammar("Resources/g1.txt")
-    grammar.readGrammar()
-    while 1:
-        menu()
-        try:
-            option = int(input("What is your choice? -> "))
-        except ValueError as ve:
-            option = 100
-        match option:
-            case 0:
-                return
-            case 1:
-                grammar.printNonTerminals()
-            case 2:
-                grammar.printTerminals()
-            case 3:
-                grammar.printProductions()
-            case 4:
-                grammar.productionsForNonTerminal()
-            case 5:
-                print(grammar.checkCFG())
-            case _:
-                print("Invalid choice!")
-
+    try:
+        grammar = Grammar("Resources/g2.txt")
+        grammar.readGrammar()
+        while 1:
+            menu()
+            try:
+                option = int(input("What is your choice? -> "))
+            except ValueError as ve:
+                option = 100
+            match option:
+                case 0:
+                    return
+                case 1:
+                    grammar.printNonTerminals()
+                case 2:
+                    grammar.printTerminals()
+                case 3:
+                    grammar.printProductions()
+                case 4:
+                    grammar.productionsForNonTerminal()
+                case 5:
+                    print(grammar.checkCFG())
+                case _:
+                    print("Invalid choice!")
+    except Exception as e:
+        print(e)
 
 if __name__ == "__main__":
     run()

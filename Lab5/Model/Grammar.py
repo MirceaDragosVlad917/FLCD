@@ -45,18 +45,31 @@ class Grammar:
             if index == 1:
                 self.terminals = self.readFromFile(line)
             if index == 2:
-                self.startingSymbol = line.replace(" ", "").strip().split("=")[-1]
+                startingSymbol = line.replace(" ", "").strip().split("=")[-1]
+                if startingSymbol not in self.nonTerminals:
+                    raise Exception("The starting symbol is not in the list of non-terminals!")
+                self.startingSymbol = startingSymbol
             index = index + 1
         index = 4
         while index < len(content):
             line = content[index].strip().split("->")
-            first = line[0].strip().split(" ")
+            left = line[0].strip().split(" ")
+            for elem in left:
+                if elem not in self.nonTerminals and elem not in self.terminals:
+                    raise Exception(elem + " is not in the list of non-terminals or terminals!")
             productions = line[1].split("|")
-            second = []
+            right = []
             for elem in productions:
                 elem = elem.strip().split(" ")
-                second.append(elem)
-            self.productions.append((first, second))
+                right.append(elem)
+            for element in right:
+                for elem in element:
+                    if elem not in self.nonTerminals and elem not in self.terminals:
+                        raise Exception(elem + " is not in the list of non-terminals or terminals!")
+            production = (left, right)
+            if production in self.productions:
+                return
+            self.productions.append(production)
             index = index + 1
 
     def productionsForNonTerminal(self):
@@ -78,7 +91,7 @@ class Grammar:
     def checkCFG(self):
         """
         This function checks if the grammar is context free
-        :return:
+        :return: string, a corresponding message
         """
         for elem in self.productions:
             if len(elem[0]) > 1:
