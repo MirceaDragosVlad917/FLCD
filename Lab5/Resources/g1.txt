@@ -1,5 +1,9 @@
-Non-terminals = {S,A}
-Terminals = {a,b,c}
-Starting-symbol = S
+Non-terminals = {E,T,E`,F,T`}
+Terminals = {+,*,id,(,),epsilon}
+Starting-symbol = E
 Productions:
-S -> a S b S | c
+E -> T E`
+E` -> + T E` | epsilon
+T -> F T`
+T` -> * F T` | epsilon
+F -> ( E ) | id

@@ -1,4 +1,5 @@
 from Model.Grammar import Grammar
+from Model.Parser import Parser
 
 
 def menu():
@@ -8,11 +9,14 @@ def menu():
     print("2. Print the terminals")
     print("3. Print the productions")
     print("4. Print the productions for a given non-terminal")
-    print("5. Check CFG \n")
+    print("5. Check CFG")
+    print("6. Print First")
+    print("7. Print Follow")
 
 def run():
     try:
         grammar = Grammar("Resources/g1.txt")
+        parser = Parser()
         grammar.readGrammar()
         while 1:
             menu()
@@ -34,6 +38,8 @@ def run():
                     grammar.productionsForNonTerminal(non_terminal)
                 case 5:
                     print(grammar.checkCFG())
+                case 6:
+                    parser.printFirst()
                 case _:
                     print("Invalid choice!")
     except Exception as e:

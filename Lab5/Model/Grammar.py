@@ -74,9 +74,10 @@ class Grammar:
 
     def productionsForNonTerminal(self, non_terminal):
         """
-        This function prints the productions for a given non-terminal that is read from keyboard
+        This function prints the productions for a given non-terminal
         In case the string read from keyboard is not in the list of non-terminals, a message is displayed on the screen
-        :return:
+        :param non_terminal: string, representing the non-terminal
+        :return: -
         """
         if non_terminal not in self.nonTerminals:
             print("The non-terminal is not in the list of non terminals!")
@@ -86,6 +87,33 @@ class Grammar:
                 print("Productions for the given non-terminal: " + str(elem[1]))
                 return
         print("There are no productions for the given non-terminal!")
+
+    def getProductionsForNonTerminal(self, non_terminal):
+        """
+        This function prints the productions for a given non-terminal
+        :param non_terminal: string, representing the non-terminal
+        :return: a list, containing the productions for the given non-terminal
+        """
+        if non_terminal not in self.nonTerminals:
+            print("The non-terminal is not in the list of non terminals!")
+            return
+        for elem in self.productions:
+            if ' '.join(elem[0]) == non_terminal:
+                return elem[1]
+        return []
+
+    def getProductionsContainingNonTerminal(self, non_terminal):
+        """
+        This function returns the productions that contain a given non-terminal
+        :param non_terminal: string, representing the non-terminal
+        :return: list, containing the productions
+        """
+        productions = []
+        for production in self.productions:
+            for elem in production[1]:
+                if non_terminal in elem:
+                    productions.append((production[0], elem))
+        return productions
 
     def checkCFG(self):
         """
