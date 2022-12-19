@@ -3,16 +3,16 @@ from Model.Grammar import Grammar
 
 class Parser:
     def __init__(self):
-        self.grammar = Grammar("Resources/g1.txt")
+        self.grammar = Grammar("Resources/first_follow.txt")
         self.first = {}
         self.follow = {}
         self.getFirst()
+        self.getFollow()
 
     def FirstAlgorithm(self, non_terminal):
-        first = set()
         if non_terminal in self.grammar.terminals:
-            first.add(non_terminal)
-            return first
+            return set(non_terminal)
+        first = set()
         for production in self.grammar.getProductionsForNonTerminal(non_terminal):
             if production[0] in self.grammar.terminals or production[0] == 'epsilon':
                 first.add(production[0])
@@ -25,15 +25,24 @@ class Parser:
                             if 'epsilon' not in self.FirstAlgorithm(production[j]):
                                 flag = False
                         if flag is True:
-                            for elem in self.FirstAlgorithm(rule):
-                                first.add(elem)
+                            for e in self.FirstAlgorithm(rule):
+                                first.add(e)
         return first
+
+    def getFirst(self):
+        for non_term in self.grammar.nonTerminals:
+            self.first[non_term] = self.FirstAlgorithm(non_term)
+
+    def printFirst(self):
+        for elem in self.first.keys():
+            print(elem, ' : ', self.first[elem])
 
     def FollowAlgorithm(self, non_terminal):
         follow = set()
         if non_terminal == self.grammar.startingSymbol:
             follow.add('$')
         for production in self.grammar.getProductionsContainingNonTerminal(non_terminal):
+            start = production[0][0]
             rule = production[1]
             for i in range(len(rule)):
                 term = rule[i]
@@ -43,12 +52,21 @@ class Parser:
                         for e in first_next:
                             if e != 'epsilon':
                                 follow.add(e)
+                        if 'epsilon' in first_next:
+                            for f in self.FollowAlgorithm(start):
+                                follow.add(f)
+                    else:
+                        if start != non_terminal:
+                            for f in self.FollowAlgorithm(start):
+                                follow.add(f)
         return follow
 
-    def getFirst(self):
+    def getFollow(self):
         for non_term in self.grammar.nonTerminals:
-            self.first[non_term] = self.FirstAlgorithm(non_term)
+            self.follow[non_term] = self.FollowAlgorithm(non_term)
 
-    def printFirst(self):
-        for key in self.first.keys():
-            print(key, ' : ', self.first[key])
+    def printFollow(self):
+        for elem in self.follow.keys():
+            print(elem, ' : ', self.follow[elem])
+
+

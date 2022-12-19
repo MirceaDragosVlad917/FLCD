@@ -15,7 +15,7 @@ def menu():
 
 def run():
     try:
-        grammar = Grammar("Resources/g1.txt")
+        grammar = Grammar("Resources/first_follow.txt")
         parser = Parser()
         grammar.readGrammar()
         while 1:
@@ -40,6 +40,8 @@ def run():
                     print(grammar.checkCFG())
                 case 6:
                     parser.printFirst()
+                case 7:
+                    parser.printFollow()
                 case _:
                     print("Invalid choice!")
     except Exception as e:
