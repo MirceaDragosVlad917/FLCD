@@ -8,6 +8,10 @@ class Parser:
         self.follow = {}
         self.getFirst()
         self.getFollow()
+        # self.parserTable = {}
+        # self.numberedProductions = []
+        # self.number_productions()
+        # self.generate_parser_table()
 
     def FirstAlgorithm(self, non_terminal):
         if non_terminal in self.grammar.terminals:
@@ -17,16 +21,16 @@ class Parser:
             if production[0] in self.grammar.terminals or production[0] == 'epsilon':
                 first.add(production[0])
             else:
-                for i in range(len(production)):
-                    rule = production[i]
-                    if rule in self.grammar.nonTerminals:
+                for index in range(len(production)):
+                    right = production[index]
+                    if right in self.grammar.nonTerminals:
                         flag = True
-                        for j in range(i):
+                        for j in range(index):
                             if 'epsilon' not in self.FirstAlgorithm(production[j]):
                                 flag = False
                         if flag is True:
-                            for e in self.FirstAlgorithm(rule):
-                                first.add(e)
+                            for elem in self.FirstAlgorithm(right):
+                                first.add(elem)
         return first
 
     def getFirst(self):
@@ -42,22 +46,22 @@ class Parser:
         if non_terminal == self.grammar.startingSymbol:
             follow.add('$')
         for production in self.grammar.getProductionsContainingNonTerminal(non_terminal):
-            start = production[0][0]
-            rule = production[1]
-            for i in range(len(rule)):
-                term = rule[i]
-                if term == non_terminal:
-                    if i < (len(rule) - 1):
-                        first_next = self.FirstAlgorithm(rule[i + 1])
-                        for e in first_next:
+            left = production[0][0]
+            right = production[1]
+            for i in range(len(right)):
+                elem = right[i]
+                if elem == non_terminal:
+                    if i < (len(right) - 1):
+                        firstOfNext = self.FirstAlgorithm(right[i + 1])
+                        for e in firstOfNext:
                             if e != 'epsilon':
                                 follow.add(e)
-                        if 'epsilon' in first_next:
-                            for f in self.FollowAlgorithm(start):
+                        if 'epsilon' in firstOfNext:
+                            for f in self.FollowAlgorithm(left):
                                 follow.add(f)
                     else:
-                        if start != non_terminal:
-                            for f in self.FollowAlgorithm(start):
+                        if left != non_terminal:
+                            for f in self.FollowAlgorithm(left):
                                 follow.add(f)
         return follow
 
@@ -69,4 +73,4 @@ class Parser:
         for elem in self.follow.keys():
             print(elem, ' : ', self.follow[elem])
 
-
+    
