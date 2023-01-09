@@ -8,10 +8,10 @@ class Parser:
         self.follow = {}
         self.getFirst()
         self.getFollow()
-        self.parserTable = {}
+        self.parsingTable = {}
         self.numberedProductions = []
-        self.number_productions()
-        self.generate_parser_table()
+        self.indexProductions()
+        self.generateParsingTable()
 
     def FirstAlgorithm(self, non_terminal):
         """
@@ -66,14 +66,13 @@ class Parser:
         if non_terminal == self.grammar.startingSymbol:
             follow.add('$')
         for production in self.grammar.getProductionsContainingNonTerminal(non_terminal):
-            print(production)
             left = production[0][0]
             right = production[1]
-            for i in range(len(right)):
-                elem = right[i]
+            for index in range(len(right)):
+                elem = right[index]
                 if elem == non_terminal:
-                    if i < (len(right) - 1):
-                        firstOfNext = self.FirstAlgorithm(right[i + 1])
+                    if index < (len(right) - 1):
+                        firstOfNext = self.FirstAlgorithm(right[index + 1])
                         for e in firstOfNext:
                             if e != 'epsilon':
                                 follow.add(e)
@@ -94,13 +93,108 @@ class Parser:
         for elem in self.follow.keys():
             print(elem, ' : ', self.follow[elem])
 
-    def number_productions(self):
+    def indexProductions(self):
+        """
+        This function indexes the productions and adds them to a list
+        :return: -
+        """
         index = 1
         for production in self.grammar.productions:
-            start = production[0]
-            rules = production[1]
-            for rule in rules:
-                self.numberedProductions.append(((start, rule), index))
+            left = production[0]
+            right = production[1]
+            for elem in right:
+                self.numberedProductions.append(((left, elem), index))
                 index += 1
 
+    def generateParsingTable(self):
+        """
+        This function generates the parsing table following the rules:
+        -if an element from the set of terminals is epsilon, we will insert "acc" on the table at the key corresponding to that element and pop otherwise
+        :return:
+        """
+        for k in self.grammar.terminals:
+            if k == 'epsilon':
+                result = 'acc'
+            else:
+                result = 'pop'
+            self.parsingTable[(k, k)] = result
+        # print(self.numberedProductions)
+        for production in self.numberedProductions:
+            prod = production[0]
+            # print(prod[0][0])
+            index = production[1]
+            print(self.getConcatenatedFirst(prod[1]))
+            for elem in self.getConcatenatedFirst(prod[1]):
+                if isinstance(elem, list):
+                    elem = tuple(elem)
+                if (prod[0][0], elem) in self.parsingTable.keys():
+                    print("Conflict! M(" + prod[0][0] + "," + elem + ")")
+                if elem != 'epsilon':
+                    self.parsingTable[(prod[0][0], elem)] = (prod[1], index)
 
+            if 'epsilon' in self.getConcatenatedFirst(prod[1]):
+                for element in self.FollowAlgorithm(prod[0][0]):
+                    if isinstance(element, list):
+                        element = tuple(element)
+                    if (prod[0][0], element) in self.parsingTable.keys():
+                        print("Conflict! M(" + prod[0][0] + "," + elem + ")")
+                    self.parsingTable[(prod[0][0], element)] = (prod[1], index)
+
+    def sequenceAnalyzer(self, sequence):
+        input_stack = []
+        working_stack = []
+        output = []
+        input_stack.append("$")
+        sequence = sequence.split(" ")
+
+        for elem in reversed(sequence):
+            input_stack.append(elem)
+
+        working_stack.append("$")
+        working_stack.append(self.grammar.startingSymbol)
+
+        while input_stack[len(input_stack) - 1] != "$" or working_stack[len(working_stack) - 1] != "$":
+            topInputStack = input_stack[len(input_stack) - 1]
+            topWorkingStack = working_stack[len(working_stack) - 1]
+            if (topWorkingStack, topInputStack) in self.parsingTable.keys():
+                value = self.parsingTable[(topWorkingStack, topInputStack)]
+                if isinstance(value, tuple) is False and value == "pop":
+                    input_stack.pop()
+                    working_stack.pop()
+                    continue
+                else:
+                    working_stack.pop()
+                    if value[0] != ['epsilon']:
+                        production = value[0]
+                        for prod in reversed(production):
+                            working_stack.append(prod)
+                output.append(self.parsingTable[(topWorkingStack, topInputStack)])
+            else:
+                print("Error for " + topInputStack + " , " + topWorkingStack)
+                return output
+        return output
+
+    def getConcatenatedFirst(self, target_list):
+        concatenated_first = set()
+        index = 0
+        flag = True
+        while flag:
+            element = target_list[index]
+            if element in self.grammar.terminals:
+                concatenated_first.add(element)
+                break
+            firstList = self.first[element]
+            for elem in firstList:
+                concatenated_first.add(elem)
+            if 'epsilon' not in firstList:
+                flag = False
+            index += 1
+        return concatenated_first
+
+    def printParsingTable(self):
+        for key in self.parsingTable.keys():
+            if self.parsingTable[key] == 'pop' or self.parsingTable[key] == 'acc':
+                print("M( " + key[0] + " , " + key[1] + " ) = " + self.parsingTable[key])
+            else:
+                print("M( " + key[0] + " , " + key[1] + " ) = " + ' '.join(self.parsingTable[key][0]) + "," + str(
+                    self.parsingTable[key][1]))

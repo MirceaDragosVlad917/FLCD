@@ -1,5 +1,6 @@
 from Model.Grammar import Grammar
 from Model.Parser import Parser
+from Model.ParserOutput import ParserOutput
 
 
 def menu():
@@ -12,11 +13,14 @@ def menu():
     print("5. Check CFG")
     print("6. Print First")
     print("7. Print Follow")
+    print("8. Print the parsing table")
+    print("9. Print parsing tree to screen and file")
 
 def run():
     try:
         grammar = Grammar("Resources/first_follow.txt")
         parser = Parser()
+        parserOutput = ParserOutput(parser, "id + id", "Resources/parser_output.txt")
         grammar.readGrammar()
         while 1:
             menu()
@@ -42,6 +46,11 @@ def run():
                     parser.printFirst()
                 case 7:
                     parser.printFollow()
+                case 8:
+                    parser.printParsingTable()
+                case 9:
+                    parserOutput.printParsingTree()
+                    parserOutput.printParsingTreeToFile()
                 case _:
                     print("Invalid choice!")
     except Exception as e:
