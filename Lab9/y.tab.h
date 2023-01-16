@@ -40,94 +40,92 @@
       know about them.  */
    enum yytokentype {
      ID = 258,
-     CONST = 259,
-     BOOL = 260,
-     CHAR = 261,
-     INT = 262,
-     ARRAY = 263,
-     NUMBER = 264,
-     OF = 265,
-     FLOAT = 266,
-     PLUS = 267,
-     MINUS = 268,
-     EQUALS = 269,
-     MUL = 270,
-     DIV = 271,
-     ASSIGN = 272,
-     LESS = 273,
-     GREATER = 274,
-     LESS_OR_EQUAL = 275,
-     GREATER_OR_EQUAL = 276,
-     NOT_EQUAL = 277,
-     NOT = 278,
-     AND = 279,
-     OR = 280,
-     MOD = 281,
-     CURLY_BRACKET_OPEN = 282,
-     CURLY_BRACKET_CLOS = 283,
-     SQUARE_BRACKET_OPEN = 284,
-     SQUARE_BRACKET_CLOSE = 285,
-     CLOSED_PARENTHESIS = 286,
-     OPENED_PARENTHESIS = 287,
-     SEMI_COLON = 288,
-     ENUMERATION_SIGN = 289,
-     COMMA = 290,
-     FOR = 291,
-     IN = 292,
-     RANGE = 293,
-     IF = 294,
-     ELSE = 295,
-     DO = 296,
-     READ = 297,
-     PRINT = 298,
-     THEN = 299,
-     WHILE = 300
+     CONSTVAR = 259,
+     NEW_LINE = 260,
+     TYPE = 261,
+     INTEGER = 262,
+     INT = 263,
+     BOOL = 264,
+     STRING = 265,
+     PLUS = 266,
+     MINUS = 267,
+     EQUALS = 268,
+     MUL = 269,
+     DIV = 270,
+     ASSIGN = 271,
+     LESS = 272,
+     GREATER = 273,
+     LESS_OR_EQUAL = 274,
+     GREATER_OR_EQUAL = 275,
+     NOT_EQUAL = 276,
+     NOT = 277,
+     AND = 278,
+     OR = 279,
+     MOD = 280,
+     CURLY_BRACKET_OPEN = 281,
+     CURLY_BRACKET_CLOSE = 282,
+     SQUARE_BRACKET_OPEN = 283,
+     SQUARE_BRACKET_CLOSE = 284,
+     CLOSED_PARENTHESIS = 285,
+     OPENED_PARENTHESIS = 286,
+     SEMI_COLON = 287,
+     ENUMERATION_SIGN = 288,
+     COMMA = 289,
+     FOR = 290,
+     IN = 291,
+     RANGE = 292,
+     IF = 293,
+     ELSE = 294,
+     DO = 295,
+     READ = 296,
+     PRINT = 297,
+     THEN = 298,
+     WHILE = 299
    };
 #endif
 /* Tokens.  */
 #define ID 258
-#define CONST 259
-#define BOOL 260
-#define CHAR 261
-#define INT 262
-#define ARRAY 263
-#define NUMBER 264
-#define OF 265
-#define FLOAT 266
-#define PLUS 267
-#define MINUS 268
-#define EQUALS 269
-#define MUL 270
-#define DIV 271
-#define ASSIGN 272
-#define LESS 273
-#define GREATER 274
-#define LESS_OR_EQUAL 275
-#define GREATER_OR_EQUAL 276
-#define NOT_EQUAL 277
-#define NOT 278
-#define AND 279
-#define OR 280
-#define MOD 281
-#define CURLY_BRACKET_OPEN 282
-#define CURLY_BRACKET_CLOS 283
-#define SQUARE_BRACKET_OPEN 284
-#define SQUARE_BRACKET_CLOSE 285
-#define CLOSED_PARENTHESIS 286
-#define OPENED_PARENTHESIS 287
-#define SEMI_COLON 288
-#define ENUMERATION_SIGN 289
-#define COMMA 290
-#define FOR 291
-#define IN 292
-#define RANGE 293
-#define IF 294
-#define ELSE 295
-#define DO 296
-#define READ 297
-#define PRINT 298
-#define THEN 299
-#define WHILE 300
+#define CONSTVAR 259
+#define NEW_LINE 260
+#define TYPE 261
+#define INTEGER 262
+#define INT 263
+#define BOOL 264
+#define STRING 265
+#define PLUS 266
+#define MINUS 267
+#define EQUALS 268
+#define MUL 269
+#define DIV 270
+#define ASSIGN 271
+#define LESS 272
+#define GREATER 273
+#define LESS_OR_EQUAL 274
+#define GREATER_OR_EQUAL 275
+#define NOT_EQUAL 276
+#define NOT 277
+#define AND 278
+#define OR 279
+#define MOD 280
+#define CURLY_BRACKET_OPEN 281
+#define CURLY_BRACKET_CLOSE 282
+#define SQUARE_BRACKET_OPEN 283
+#define SQUARE_BRACKET_CLOSE 284
+#define CLOSED_PARENTHESIS 285
+#define OPENED_PARENTHESIS 286
+#define SEMI_COLON 287
+#define ENUMERATION_SIGN 288
+#define COMMA 289
+#define FOR 290
+#define IN 291
+#define RANGE 292
+#define IF 293
+#define ELSE 294
+#define DO 295
+#define READ 296
+#define PRINT 297
+#define THEN 298
+#define WHILE 299
 
 
 
